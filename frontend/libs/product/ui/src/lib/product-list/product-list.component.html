@@ -1,0 +1,10 @@
+<cdk-virtual-scroll-viewport
+  itemSize="1"
+  (scrolledIndexChange)="onScroll($event)"
+  class="product-list-container"
+>
+  <m-org-product-card
+    *cdkVirtualFor="let product of products"
+    [product]="product"
+  ></m-org-product-card>
+</cdk-virtual-scroll-viewport>

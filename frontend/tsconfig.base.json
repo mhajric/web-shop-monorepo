@@ -1,0 +1,32 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2020", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@m-org/order-domain": ["libs/order/domain/src/index.ts"],
+      "@m-org/order-feature-b2b": ["libs/order/feature/b2b/src/index.ts"],
+      "@m-org/order-feature-b2c": ["libs/order/feature/b2c/src/index.ts"],
+      "@m-org/order-ui": ["libs/order/ui/src/index.ts"],
+      "@m-org/product-domain": ["libs/product/domain/src/index.ts"],
+      "@m-org/product-feature-search": [
+        "libs/product/feature-search/src/index.ts"
+      ],
+      "@m-org/product-ui": ["libs/product/ui/src/index.ts"],
+      "@m-org/shared-ui": ["libs/shared/ui/src/index.ts"],
+      "@m-org/shared-util": ["libs/shared/util/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}
