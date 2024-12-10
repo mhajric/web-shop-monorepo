@@ -17,7 +17,7 @@ import { ProductCardComponent } from '../product-card/product-card.component';
   selector: 'm-org-product-list',
   standalone: true,
   templateUrl: './product-list.component.html',
-  styleUrls: ['./product-list.component.css'],
+  styleUrls: ['./product-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [ProductCardComponent, ScrollingModule],
 })

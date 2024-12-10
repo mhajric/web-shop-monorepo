@@ -2,11 +2,12 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Product, ProductService } from '@m-org/product-domain';
 import { ProductListComponent } from '@m-org/product-ui';
+import { NavbarComponent } from '@m-org/shared-ui';
 
 @Component({
   selector: 'm-org-feature-search',
   standalone: true,
-  imports: [CommonModule, ProductListComponent],
+  imports: [CommonModule, ProductListComponent, NavbarComponent],
   templateUrl: './feature-search.component.html',
   styleUrls: ['./feature-search.component.scss'],
 })
