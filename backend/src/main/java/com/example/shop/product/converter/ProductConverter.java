@@ -14,7 +14,7 @@ public class ProductConverter {
                 .name(product.getName())
                 .price(product.getPrice())
                 .description(product.getDescription())
-                .images(product.getImages())
+                .imageUrls(product.getImages())
                 .category(product.getCategory())
                 .tags(product.getTags())
                 .build();

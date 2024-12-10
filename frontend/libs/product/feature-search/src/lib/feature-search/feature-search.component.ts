@@ -13,7 +13,7 @@ import { ProductListComponent } from '@m-org/product-ui';
 export class FeatureSearchComponent implements OnInit {
   products: Product[] = [];
   page = 0;
-  size = 1;
+  size = 20;
   loading = false;
 
   constructor(private productService: ProductService) {}

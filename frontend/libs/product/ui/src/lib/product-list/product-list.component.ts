@@ -1,4 +1,7 @@
-import { CdkVirtualScrollViewport, ScrollingModule } from '@angular/cdk/scrolling';
+import {
+  CdkVirtualScrollViewport,
+  ScrollingModule,
+} from '@angular/cdk/scrolling';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -28,9 +31,8 @@ export class ProductListComponent {
     const end = this.viewport.getRenderedRange().end;
     const total = this.viewport.getDataLength();
     console.log(`${end}, '>=', ${total}`);
-    if (end === total) {
+    if (end === total - 1) {
       this.reloadNeeded.emit();
     }
-
   }
 }
