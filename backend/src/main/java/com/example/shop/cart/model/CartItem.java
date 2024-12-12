@@ -21,10 +21,10 @@ import java.util.UUID;
 public class CartItem  implements Serializable {
     private UUID productId;           // Unique identifier for the product
     private String name;              // Name of the product
+    private String imageUrl;          // Image URL for the product
     private BigDecimal unitPrice;     // Price per unit of the product
     private int quantity;             // Quantity of the product
 
-    @JsonIgnore
     private Discount discount;        // Discount applied to this item
 
     public BigDecimal getTotalPrice() {
@@ -35,7 +35,7 @@ public class CartItem  implements Serializable {
         return unitPrice.subtract(discountAmount).multiply(BigDecimal.valueOf(quantity));
     }
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
+
     public String getDiscountDescription() {
         return discount != null ? discount.getDescription() : null;
     }

@@ -1,0 +1,14 @@
+<ng-container *ngIf="getCart() | async as cart">
+  <ng-container
+    *ngIf="cart.items.length > 0 && cart.totalPrice > 0; else empty"
+  >
+    <m-org-cart-item
+      *ngFor="let item of cart.items"
+      [cartItem]="item"
+    ></m-org-cart-item>
+    <hr />
+    <div class="cart-total">Total: ${{ cart.totalPrice }}</div>
+  </ng-container>
+</ng-container>
+
+<ng-template #empty>Your cart is empty.</ng-template>

@@ -1,0 +1,11 @@
+<img class="cart-item-img" [src]="cartItem.imageUrl" alt="No Image" />
+<div class="cart-item-info">
+  <div class="cart-item-name">{{ cartItem.name }}</div>
+  <div class="cart-item-price">${{ cartItem.unitPrice }}</div>
+  <div class="cart-item-quantity">Quantity: {{ cartItem.quantity }}</div>
+  <div class="cart-item-total-price">${{ cartItem.totalPrice }}</div>
+  <div class="cart-item-discount-description">
+    Discount: {{ cartItem.discountDescription }}
+  </div>
+  <div class="cart-item-discount-amount">${{ cartItem.discountAmount }}</div>
+</div>

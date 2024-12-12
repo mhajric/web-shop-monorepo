@@ -36,13 +36,13 @@ public class Cart  implements Serializable {
 
     }
 
-    public void addItem(final UUID productId, final String name, final BigDecimal price, final int quantity, final Discount discount) {
+    public void addItem(final UUID productId, final String name,final String imageUrl, final BigDecimal price, final int quantity, final Discount discount) {
         items.stream().filter(item -> item.getProductId().equals(productId))
                 .findFirst().ifPresentOrElse(cartItem -> {
                     cartItem.setQuantity(cartItem.getQuantity() + quantity);
                     totalPrice = totalPrice.add(cartItem.getUnitPrice().multiply(BigDecimal.valueOf(quantity)));
                 }, () -> {
-                    items.add(new CartItem(productId, name, price, quantity, discount));
+                    items.add(new CartItem(productId, name,imageUrl, price, quantity, discount));
                     totalPrice = totalPrice.add(price.multiply(BigDecimal.valueOf(quantity)));
                 });
     }

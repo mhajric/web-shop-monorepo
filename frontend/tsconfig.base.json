@@ -15,12 +15,12 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@m-org/home-feature": ["libs/home/feature-home/src/index.ts"],
+      "@m-org/cart-domain": ["libs/cart/domain/src/index.ts"],
+      "@m-org/cart-ui": ["libs/cart/ui/src/index.ts"],
       "@m-org/home-domain": ["libs/home/domain/src/index.ts"],
+      "@m-org/home-feature": ["libs/home/feature-home/src/index.ts"],
       "@m-org/home-ui": ["libs/home/ui/src/index.ts"],
       "@m-org/order-domain": ["libs/order/domain/src/index.ts"],
-      "@m-org/order-feature-b2b": ["libs/order/feature/b2b/src/index.ts"],
-      "@m-org/order-feature-b2c": ["libs/order/feature/b2c/src/index.ts"],
       "@m-org/order-ui": ["libs/order/ui/src/index.ts"],
       "@m-org/product-domain": ["libs/product/domain/src/index.ts"],
       "@m-org/product-feature-search": [
