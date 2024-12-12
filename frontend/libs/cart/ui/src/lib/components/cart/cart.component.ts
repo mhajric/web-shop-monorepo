@@ -13,7 +13,7 @@ import { CartItemComponent } from '../cart-item/cart-item.component';
 export class CartComponent {
   constructor(private cartService: CartService) {}
 
-  getCart(): Observable<Cart> {
-    return this.cartService.getCart();
+  get cart$(): Observable<Cart> {
+    return this.cartService.cart$;
   }
 }
