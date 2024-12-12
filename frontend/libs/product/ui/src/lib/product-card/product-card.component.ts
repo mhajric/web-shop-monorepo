@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   Output,
@@ -17,7 +19,7 @@ import { Product } from '@m-org/product-domain';
   styleUrls: ['./product-card.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProductCardComponent {
+export class ProductCardComponent implements AfterViewInit {
   @Input() product!: Product;
   @Output() addToCartEvent = new EventEmitter<any>();
   @Output() addToWishListEvent = new EventEmitter<any>();
@@ -25,6 +27,17 @@ export class ProductCardComponent {
   @Output() viewDetailsEvent = new EventEmitter<any>();
   @Output() shareEvent = new EventEmitter<any>();
 
+  @Output() sizeChange = new EventEmitter<number>(); // Emit size change event
+
+  constructor(private el: ElementRef) {}
+  ngAfterViewInit(): void {
+    if (this.el?.nativeElement) {
+      const height = this.el.nativeElement.offsetHeight;
+      this.sizeChange.emit(height);
+    } else {
+      console.warn('Card element not initialized!');
+    }
+  }
   // Flag to check if the product is on sale
   get isOnSale(): boolean {
     return (

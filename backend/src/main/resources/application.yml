@@ -32,4 +32,4 @@ de:
   flapdoodle:
     mongodb:
       embedded:
-        version: 5.0.8
+        version: 4.0.0

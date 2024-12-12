@@ -1,3 +1,7 @@
 <m-org-navbar></m-org-navbar>
-<m-org-product-list [products]="products" (reloadNeeded)="loadProducts()"></m-org-product-list>
+<m-org-product-list
+  [products]="(products$ | async) || []"
+  [data]="products$"
+  (loadMore)="loadProducts()"
+></m-org-product-list>
 <div class="loading-spinner" *ngIf="loading">Loading...</div>

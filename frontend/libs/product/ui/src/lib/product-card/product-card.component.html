@@ -22,7 +22,7 @@
   </mat-card-header>
   <mat-card-content class="product-description">
     <p>
-      {{ product.description }}
+      {{ product.description | slice: 0 : 96 }}
     </p>
   </mat-card-content>
   <mat-card-actions class="product-actions">

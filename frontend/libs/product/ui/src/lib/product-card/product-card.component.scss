@@ -1,18 +1,19 @@
 :host {
   display: flex;
+  flex-direction: column;
   flex: 1 1 auto;
   align-items: center;
   justify-content: center;
-  margin: 1rem;
 
   .product-card {
     border: 1px solid #ccc;
     padding: 20px;
-    margin: 10px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    width: 280px;
+    align-items: stretch;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 300px;
     border-radius: 10px;
     background-color: #fff;
 

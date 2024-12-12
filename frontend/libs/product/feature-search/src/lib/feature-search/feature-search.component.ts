@@ -1,8 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { Product, ProductService } from '@m-org/product-domain';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+} from '@angular/core';
+import { Page, Product, ProductService } from '@m-org/product-domain';
 import { ProductListComponent } from '@m-org/product-ui';
 import { NavbarComponent } from '@m-org/shared-ui';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'm-org-feature-search',
@@ -10,26 +15,35 @@ import { NavbarComponent } from '@m-org/shared-ui';
   imports: [CommonModule, ProductListComponent, NavbarComponent],
   templateUrl: './feature-search.component.html',
   styleUrls: ['./feature-search.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FeatureSearchComponent implements OnInit {
+export class FeatureSearchComponent {
   products: Product[] = [];
-  page = 0;
-  size = 20;
+  productsSubject = new BehaviorSubject<Product[]>([]);
+  products$ = this.productsSubject.asObservable();
+  currentPage = 0;
+  pageSize = 20; // Items per page
   loading = false;
 
-  constructor(private productService: ProductService) {}
-  ngOnInit(): void {
-    this.loadProducts();
-  }
+  constructor(
+    private productService: ProductService,
+    private cd: ChangeDetectorRef,
+  ) {}
 
   loadProducts(): void {
-    if (this.loading) return;
-
+    if (this.loading) {
+      return;
+    }
     this.loading = true;
-    this.productService.getProducts(this.page, this.size).subscribe({
-      next: (response) => {
-        this.products = [...this.products, ...response.content];
-        this.page++;
+
+    this.productService.getProducts(this.currentPage, this.pageSize).subscribe({
+      next: (data: Page<Product>) => {
+        //this.products = [...this.products, ...data.content];
+        this.productsSubject.next([
+          ...this.productsSubject.value,
+          ...data.content,
+        ]);
+        this.currentPage++;
         this.loading = false;
       },
       error: () => {
