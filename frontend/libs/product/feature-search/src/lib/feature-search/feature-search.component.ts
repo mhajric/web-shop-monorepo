@@ -1,17 +1,18 @@
 import { CommonModule } from '@angular/common';
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  OnInit,
 } from '@angular/core';
 import { Page, Product, ProductService } from '@m-org/product-domain';
 import { ProductListComponent } from '@m-org/product-ui';
-import { NavbarComponent } from '@m-org/shared-ui';
 import { BehaviorSubject } from 'rxjs';
 
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { CartComponent } from '@m-org/cart-ui';
+import { SpinnerComponent } from '@m-org/shared-ui';
 
 @Component({
   selector: 'm-org-feature-search',
@@ -19,33 +20,37 @@ import { CartComponent } from '@m-org/cart-ui';
   imports: [
     CommonModule,
     ProductListComponent,
-    NavbarComponent,
     MatSidenavModule,
     MatToolbarModule,
-    CartComponent,
+    SpinnerComponent,
   ],
   templateUrl: './feature-search.component.html',
   styleUrls: ['./feature-search.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FeatureSearchComponent {
+export class FeatureSearchComponent implements OnInit, AfterViewInit {
   products: Product[] = [];
   productsSubject = new BehaviorSubject<Product[]>([]);
   products$ = this.productsSubject.asObservable();
   currentPage = 0;
   pageSize = 20; // Items per page
-  loading = false;
+  readonly loadingSubject = new BehaviorSubject(false);
+  loading$ = this.loadingSubject.asObservable();
 
   constructor(
     private productService: ProductService,
     private cd: ChangeDetectorRef,
   ) {}
 
+  ngAfterViewInit(): void {}
+
+  ngOnInit(): void {}
+
   loadProducts(): void {
-    if (this.loading) {
+    if (this.loadingSubject.value) {
       return;
     }
-    this.loading = true;
+    this.loadingSubject.next(true);
 
     this.productService.getProducts(this.currentPage, this.pageSize).subscribe({
       next: (data: Page<Product>) => {
@@ -55,10 +60,10 @@ export class FeatureSearchComponent {
           ...data.content,
         ]);
         this.currentPage++;
-        this.loading = false;
+        this.loadingSubject.next(false);
       },
       error: () => {
-        this.loading = false;
+        this.loadingSubject.next(true);
       },
     });
   }

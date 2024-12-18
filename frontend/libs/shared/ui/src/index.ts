@@ -1,1 +1,1 @@
-export * from './lib/navbar/navbar.component';
+export * from './lib/component/spinner/spinner.component';
