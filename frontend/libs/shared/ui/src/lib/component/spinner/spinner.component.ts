@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'mui-spinner',
+  selector: 'ui-spinner',
   imports: [CommonModule],
   templateUrl: './spinner.component.html',
   styleUrl: './spinner.component.scss',

@@ -1,0 +1,24 @@
+<div
+  *ngIf="isVisible"
+  class="flex flex-1 items-center justify-center p-4"
+  [ngStyle]="{
+    'background-color': backgroundColor,
+    'color': textColor
+  }"
+>
+  <mat-icon *ngIf="icon" class="mr-4">{{ icon }}</mat-icon>
+
+  <div class="px-3">
+    <h3 class="font-bold text-lg">{{ title }}</h3>
+    <p class="text-sm">{{ description }}</p>
+  </div>
+
+  <button
+    *ngIf="closable"
+    mat-icon-button
+    (click)="closeBanner()"
+    aria-label="Close banner"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
