@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -48,25 +47,21 @@ public class CartController {
     }
 
     @PostMapping("/remove")
-    @ResponseBody
     public ResponseEntity<CartResponse> removeFromCart(@Parameter(hidden = true) @ModelAttribute("cart") Cart cart, @RequestParam UUID productId, @RequestParam int quantity) {
         return ResponseEntity.ok(cartService.removeItemFromCart(cart, productId, quantity));
     }
 
     @PostMapping("/remove-all")
-    @ResponseBody
     public ResponseEntity<CartResponse> removeAllFromCart(@Parameter(hidden = true) @ModelAttribute("cart") Cart cart, @RequestParam UUID productId) {
         return ResponseEntity.ok(cartService.removeAllItemsFromCart(cart, productId));
     }
 
     @GetMapping
-    @ResponseBody
     public ResponseEntity<CartResponse> getCart(@Parameter(hidden = true) @ModelAttribute("cart") Cart cart) {
         return ResponseEntity.ok(cartService.getCart(cart));
     }
 
     @PostMapping("/clear")
-    @ResponseBody
     public ResponseEntity<CartResponse> clearCart(@Parameter(hidden = true) @ModelAttribute("cart") Cart cart) {
         return ResponseEntity.ok(cartService.clearCart(cart));
     }
