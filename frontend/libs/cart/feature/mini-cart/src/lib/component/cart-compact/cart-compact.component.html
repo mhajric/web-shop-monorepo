@@ -1,0 +1,33 @@
+<ng-container *ngIf="(cart$|async) as cart; else emptyCart">
+  <mat-toolbar class="flex justify-between">
+    <button mat-icon-button>
+      <mat-icon>share</mat-icon>
+    </button>
+    <button mat-icon-button>
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-toolbar>
+  <div class="flex flex-col flex-grow overflow-y-auto px-4">
+    <m-org-cart-item *ngFor="let item of cart?.items" [item]="item"></m-org-cart-item>
+  </div>
+  <div class="flex justify-between p-4 border-t">
+    <div class="flex flex-grow">
+      <p class="font-bold text-base">Total:</p>
+    </div>
+    <div>
+      <p class="font-bold text-base">{{ cart.totalPrice | currency }}</p>
+    </div>
+  </div>
+  <div class="flex justify-center py-4">
+    <a mat-flat-button color="accent" routerLink="/checkout">Checkout</a>
+  </div>
+</ng-container>
+
+<ng-template #emptyCart>
+  <div class="flex flex-col items-center justify-center gap-4 p-6 text-center">
+    <mat-icon class="!flex !w-[120px] !h-[120px] items-center justify-center text-6xl text-gray-400 m-3">shopping_cart
+    </mat-icon>
+    <h2 class="text-2xl">Your cart is empty</h2>
+    <button mat-raised-button color="primary" routerLink="/products">Shop now</button>
+  </div>
+</ng-template>

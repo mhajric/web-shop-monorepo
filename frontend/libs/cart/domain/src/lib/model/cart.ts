@@ -13,4 +13,5 @@ export interface Cart {
   cartId: string;
   items: CartItem[];
   totalPrice: number;
+  currency?: string;
 }

@@ -1,0 +1,43 @@
+{
+  "name": "mini-cart",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/cart/feature/mini-cart/src",
+  "prefix": "m-org",
+  "projectType": "library",
+  "tags": [
+    "scope:cart",
+    "type:feature"
+  ],
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:ng-packagr-lite",
+      "outputs": [
+        "{workspaceRoot}/dist/{projectRoot}"
+      ],
+      "options": {
+        "project": "libs/cart/feature/mini-cart/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/cart/feature/mini-cart/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/cart/feature/mini-cart/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
+      "options": {
+        "jestConfig": "libs/cart/feature/mini-cart/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

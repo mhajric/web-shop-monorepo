@@ -41,6 +41,8 @@ export class ProductListComponent implements AfterViewInit {
   itemHeight = 360;
   itemsPerRow = 4;
   itemFlex = `1 0 calc(${100 / this.itemsPerRow}% - 10px)`; // 10px gap
+  @Output()
+  addToCartEvent: EventEmitter<Product> = new EventEmitter<Product>();
 
   constructor() {}
 

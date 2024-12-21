@@ -12,9 +12,11 @@
         class="product-item"
         [style.flex]="itemFlex"
       >
+
         <m-org-product-card
           [product]="product"
           (sizeChange)="onSizeChange($event)"
+          (addToCartEvent)="addToCartEvent.emit($event)"
         ></m-org-product-card>
       </div>
     </div>

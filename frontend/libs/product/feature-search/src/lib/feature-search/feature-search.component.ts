@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   OnInit,
 } from '@angular/core';
@@ -12,7 +11,18 @@ import { BehaviorSubject } from 'rxjs';
 
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { SpinnerComponent } from '@m-org/shared-ui';
+import {
+  NavbarComponent,
+  NavbarLeftComponent,
+  NavbarRightComponent,
+  SidenavComponent,
+  SidenavRightComponent,
+  SpinnerComponent,
+} from '@m-org/shared-ui';
+import { MatIcon } from '@angular/material/icon';
+import { MatIconButton } from '@angular/material/button';
+import { CartCompactComponent } from '@m-org/mini-cart';
+import { CartService } from '@m-org/cart-domain';
 
 @Component({
   selector: 'm-org-feature-search',
@@ -23,6 +33,14 @@ import { SpinnerComponent } from '@m-org/shared-ui';
     MatSidenavModule,
     MatToolbarModule,
     SpinnerComponent,
+    NavbarComponent,
+    NavbarLeftComponent,
+    NavbarRightComponent,
+    MatIcon,
+    MatIconButton,
+    SidenavComponent,
+    SidenavRightComponent,
+    CartCompactComponent,
   ],
   templateUrl: './feature-search.component.html',
   styleUrls: ['./feature-search.component.scss'],
@@ -39,7 +57,7 @@ export class FeatureSearchComponent implements OnInit, AfterViewInit {
 
   constructor(
     private productService: ProductService,
-    private cd: ChangeDetectorRef,
+    private cartService: CartService,
   ) {}
 
   ngAfterViewInit(): void {}
@@ -63,8 +81,12 @@ export class FeatureSearchComponent implements OnInit, AfterViewInit {
         this.loadingSubject.next(false);
       },
       error: () => {
-        this.loadingSubject.next(true);
+        this.loadingSubject.next(false);
       },
     });
+  }
+
+  addToCart(product: Product) {
+    this.cartService.addToCart(product.id);
   }
 }

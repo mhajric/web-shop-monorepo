@@ -1,54 +1,103 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
 import { Cart } from '../model/cart';
+import { ConfigService } from '@m-org/shared-util';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
-  private readonly API_URL = 'http://localhost:8080/api/v1/cart';
+  private readonly apiUrl;
 
-  readonly  cartSubject=new BehaviorSubject<Cart >({cartId: '', items: [], totalPrice: 0});
+  readonly cartSubject: BehaviorSubject<Cart> = new BehaviorSubject<Cart>({
+    cartId: '',
+    items: [],
+    totalPrice: 0,
+  } as Cart);
 
-  constructor(private http: HttpClient) {}
-
-  get cart$(): Observable<Cart> {
-    return this.cartSubject.asObservable();
+  constructor(
+    private http: HttpClient,
+    private config: ConfigService,
+  ) {
+    this.apiUrl = this.config.get('API_URL') + '/api/v1/cart';
   }
 
   public getCart(): Observable<Cart> {
-    return this.http.get<Cart>(`${this.API_URL}`).pipe(
-      tap((cart) => this.cartSubject.next(cart)),
-      switchMap(() => this.cartSubject.asObservable()),
-    );
+    if (!this.cartSubject.value.cartId) {
+      this.http
+        .get<Cart>(`${this.apiUrl}`, { withCredentials: true })
+        .pipe(
+          tap((cart) => this.cartSubject.next(cart)),
+          catchError((error: any) => this.handleError(error)),
+        )
+        .subscribe();
+    }
+    return this.cartSubject.asObservable();
   }
 
-  public addToCart(productId: string, quantity: number): Observable<Cart> {
-    return this.http.post<Cart>(`${this.API_URL}/add`, null, {
-      params: {
-        productId,
-        quantity,
-      },
-    }).pipe(
-      tap((cart) => this.cartSubject.next(cart)),
-      switchMap(() => this.cartSubject.asObservable()),
-    );
+  public addToCart(productId: string, quantity = 1): void {
+    this.http
+      .post<Cart>(`${this.apiUrl}/add`, null, {
+        params: {
+          productId,
+          quantity,
+        },
+        withCredentials: true,
+      })
+      .pipe(
+        tap((cart) => {
+          this.cartSubject.next(cart);
+        }),
+        catchError((error) => this.handleError(error)),
+      )
+      .subscribe();
   }
 
-  public removeFromCart(productId: string, quantity: number): Observable<Cart> {
-    return this.http.delete<Cart>(`${this.API_URL}/remove`, {
-      params: {
-        productId,
-        quantity,
-      },
-    }).pipe(
-      tap((cart) => this.cartSubject.next(cart)),
-      switchMap(() => this.cartSubject.asObservable()),
-    );
+  public removeFromCart(productId: string, quantity: number): void {
+    this.http
+      .post<Cart>(`${this.apiUrl}/remove`, {
+        params: {
+          productId,
+          quantity,
+        },
+      })
+      .pipe(
+        tap((cart) => this.cartSubject.next(cart)),
+        catchError((error) => this.handleError(error)),
+      )
+      .subscribe();
   }
 
-  public clearCart(): Observable<Cart> {
-    return this.http.delete<Cart>(`${this.API_URL}/clear`);
+  public removeAllFromCart(productId: string): void {
+    this.http
+      .post<Cart>(`${this.apiUrl}/remove-all`, {
+        params: {
+          productId,
+        },
+      })
+      .pipe(
+        tap((cart) => this.cartSubject.next(cart)),
+        catchError((error) => this.handleError(error)),
+      )
+      .subscribe();
+  }
+
+  public clearCart(): void {
+    this.http
+      .post<Cart>(`${this.apiUrl}/clear`, null)
+      .pipe(
+        tap((cart) => this.cartSubject.next(cart)),
+        catchError((error) => this.handleError(error)),
+      )
+      .subscribe();
+  }
+
+  private handleError(error: any) {
+    console.error(error);
+    return throwError(() => ({
+      status: error.status,
+      message: 'Client error..',
+    }));
   }
 }

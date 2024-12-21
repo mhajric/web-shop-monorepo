@@ -11,6 +11,7 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { Product } from '@m-org/product-domain';
+
 @Component({
   selector: 'm-org-product-card',
   standalone: true,
@@ -30,6 +31,7 @@ export class ProductCardComponent implements AfterViewInit {
   @Output() sizeChange = new EventEmitter<number>(); // Emit size change event
 
   constructor(private el: ElementRef) {}
+
   ngAfterViewInit(): void {
     if (this.el?.nativeElement) {
       const height = this.el.nativeElement.offsetHeight;
@@ -38,6 +40,7 @@ export class ProductCardComponent implements AfterViewInit {
       console.warn('Card element not initialized!');
     }
   }
+
   // Flag to check if the product is on sale
   get isOnSale(): boolean {
     return (
@@ -53,12 +56,12 @@ export class ProductCardComponent implements AfterViewInit {
   }
 
   // Add to Cart handler
-  addToCart(): void {
+  addToCart(product: Product): void {
     this.addToCartEvent.emit(this.product);
   }
 
   // View Details handler
-  viewDetails(): void {
+  viewDetails(product: Product): void {
     this.viewDetailsEvent.emit(this.product);
   }
 }

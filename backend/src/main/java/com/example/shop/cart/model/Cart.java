@@ -17,15 +17,11 @@ import java.util.UUID;
 @Getter
 @Setter
 @ToString
-public class Cart  implements Serializable {
+public class Cart implements Serializable {
     private UUID cartId = UUID.randomUUID();                 // Unique identifier for the cart
     private List<CartItem> items = new ArrayList<>();        // List of cart items
     private BigDecimal totalPrice = BigDecimal.ZERO;       // Total price of all items in the cart
 
-    public void addItem(final CartItem cartItem) {
-        items.add(cartItem);
-        totalPrice = totalPrice.add(cartItem.getTotalPrice());
-    }
 
     public void removeItem(final UUID productId, final int quantity) {
         items.stream().filter(item -> item.getProductId().equals(productId))
@@ -36,13 +32,17 @@ public class Cart  implements Serializable {
 
     }
 
-    public void addItem(final UUID productId, final String name,final String imageUrl, final BigDecimal price, final int quantity, final Discount discount) {
+    public void removeAllItems(final UUID productId) {
+        items.removeIf((cartItem -> cartItem.getProductId().equals(productId)));
+    }
+
+    public void addItem(final UUID productId, final String name, final String imageUrl, final BigDecimal price, final int quantity, final Discount discount) {
         items.stream().filter(item -> item.getProductId().equals(productId))
                 .findFirst().ifPresentOrElse(cartItem -> {
                     cartItem.setQuantity(cartItem.getQuantity() + quantity);
                     totalPrice = totalPrice.add(cartItem.getUnitPrice().multiply(BigDecimal.valueOf(quantity)));
                 }, () -> {
-                    items.add(new CartItem(productId, name,imageUrl, price, quantity, discount));
+                    items.add(new CartItem(productId, name, imageUrl, price, quantity, discount));
                     totalPrice = totalPrice.add(price.multiply(BigDecimal.valueOf(quantity)));
                 });
     }
