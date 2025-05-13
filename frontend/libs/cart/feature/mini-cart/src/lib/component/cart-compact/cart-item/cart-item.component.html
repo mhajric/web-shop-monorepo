@@ -1,0 +1,39 @@
+<ng-container *ngIf="item">
+  <!-- Thumbnail -->
+  <img [src]="item.imageUrl?item.imageUrl:'https://via.assets.so/img.jpg?w=64&h=64'" alt="Product Thumbnail"
+       class="w-16 h-16 rounded object-cover" />
+
+  <!-- Product Info -->
+  <div class="flex-grow flex flex-col">
+    <!-- Product Name and Menu -->
+    <div class="flex justify-between items-center">
+      <p class="font-medium text-sm md:text-base mt-2">{{ item.name }}</p>
+      <button mat-icon-button>
+        <mat-icon>more_horiz</mat-icon>
+      </button>
+    </div>
+    <div class="flex">
+      <p class="text-sm text-gray-500 md:text-base">{{ item.unitPrice | currency }}</p>
+    </div>
+
+    <div class="flex justify-between items-stretch">
+      <!-- Quantity Adjuster -->
+      <div class="flex items-center gap-2">
+        <button mat-icon-button color="primary" (click)="decreaseQuantity()">
+          <mat-icon>remove</mat-icon>
+        </button>
+        <p class="text-center border px-3 rounded">{{ item.quantity }}</p>
+        <button mat-icon-button color="primary" (click)="increaseQuantity()">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+      <!-- Total -->
+      <div class="flex items-center">
+        <p class="font-bold text-base">{{ (item.totalPrice) | currency }}</p>
+      </div>
+    </div>
+
+  </div>
+
+
+</ng-container>

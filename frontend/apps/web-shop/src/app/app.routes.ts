@@ -3,13 +3,8 @@ import { Route } from '@angular/router';
 export const appRoutes: Route[] = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'products',
     pathMatch: 'full',
-  },
-  {
-    path: 'home',
-    loadComponent: () =>
-      import('@m-org/home-feature').then((m) => m.HomeComponent),
   },
   {
     path: 'products',

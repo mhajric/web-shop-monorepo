@@ -1,4 +1,13 @@
+@use '@angular/material' as mat;
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* You can add global styles to this file, and also import other style files */
+:root {
+  @include mat.core();
+}
 
 html,
 body {
@@ -9,6 +18,7 @@ body {
   padding: 0;
   position: relative;
 }
+
 body {
   font-family: Roboto, 'Helvetica Neue', sans-serif;
   display: flex;

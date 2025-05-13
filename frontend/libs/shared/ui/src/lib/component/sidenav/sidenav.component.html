@@ -1,0 +1,11 @@
+<mat-sidenav-container>
+  <mat-sidenav position="start" *ngIf="hasLeft" #leftSidenav class="rounded-none">
+    <ng-content select="ui-sidenav-left"></ng-content>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+  <mat-sidenav position="end" #rightSidenav class="!rounded-none">
+    <ng-content select="ui-sidenav-right"></ng-content>
+  </mat-sidenav>
+</mat-sidenav-container>

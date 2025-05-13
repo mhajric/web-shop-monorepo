@@ -1,23 +1,22 @@
 package com.example.shop.cart.controller;
 
+import com.example.shop.cart.controller.response.CartResponse;
 import com.example.shop.cart.model.Cart;
-import com.example.shop.cart.model.Discount;
-import com.example.shop.cart.service.DiscountService;
+import com.example.shop.cart.service.CartService;
 import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import java.math.BigDecimal;
 import java.util.UUID;
 
 @Slf4j
@@ -27,7 +26,7 @@ import java.util.UUID;
 @SessionAttributes("cart")
 public class CartController {
 
-    private final DiscountService discountService;
+    private final CartService cartService;
 
     @ModelAttribute("cart")
     public Cart initializeCart(HttpServletRequest request) {
@@ -41,31 +40,29 @@ public class CartController {
     }
 
     @PostMapping("/add")
-    @ResponseBody
-    public void addToCart(@Parameter(hidden = true) @ModelAttribute("cart") Cart cart,
-                            @RequestParam UUID productId,
-                            @RequestParam String name,
-                            @RequestParam BigDecimal price,
-                            @RequestParam int quantity) {
-        final Discount discount = discountService.getDiscount(productId, quantity);
-        cart.addItem(productId, name, price, quantity, discount);
+    public ResponseEntity<CartResponse> addToCart(@Parameter(hidden = true) @ModelAttribute("cart") Cart cart,
+                                                  @RequestParam UUID productId,
+                                                  @RequestParam int quantity) {
+        return ResponseEntity.ok(cartService.addItemToCart(cart, productId, quantity));
     }
 
     @PostMapping("/remove")
-    @ResponseBody
-    public void removeFromCart(@Parameter(hidden = true) @ModelAttribute("cart") Cart cart, @RequestParam UUID productId, @RequestParam int quantity) {
-        cart.removeItem(productId, quantity);
+    public ResponseEntity<CartResponse> removeFromCart(@Parameter(hidden = true) @ModelAttribute("cart") Cart cart, @RequestParam UUID productId, @RequestParam int quantity) {
+        return ResponseEntity.ok(cartService.removeItemFromCart(cart, productId, quantity));
+    }
+
+    @PostMapping("/remove-all")
+    public ResponseEntity<CartResponse> removeAllFromCart(@Parameter(hidden = true) @ModelAttribute("cart") Cart cart, @RequestParam UUID productId) {
+        return ResponseEntity.ok(cartService.removeAllItemsFromCart(cart, productId));
     }
 
     @GetMapping
-    @ResponseBody
-    public Cart viewCart(@Parameter(hidden = true) @ModelAttribute("cart") Cart cart) {
-        return cart;
+    public ResponseEntity<CartResponse> getCart(@Parameter(hidden = true) @ModelAttribute("cart") Cart cart) {
+        return ResponseEntity.ok(cartService.getCart(cart));
     }
 
     @PostMapping("/clear")
-    @ResponseBody
-    public void clearCart(@Parameter(hidden = true) @ModelAttribute("cart") Cart cart) {
-        cart.clearCart();
+    public ResponseEntity<CartResponse> clearCart(@Parameter(hidden = true) @ModelAttribute("cart") Cart cart) {
+        return ResponseEntity.ok(cartService.clearCart(cart));
     }
 }

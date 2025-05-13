@@ -25,7 +25,7 @@ module.exports = [
           'error',
           {
             type: 'attribute',
-            prefix: 'mOrg',
+            prefix: 'ui',
             style: 'camelCase',
           },
         ],
@@ -33,7 +33,7 @@ module.exports = [
           'error',
           {
             type: 'element',
-            prefix: 'm-org',
+            prefix: 'ui',
             style: 'kebab-case',
           },
         ],

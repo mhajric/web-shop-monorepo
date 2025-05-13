@@ -26,10 +26,14 @@ spring:
 server:
   servlet:
     session:
-      timeout: 30m # Session timeout duration
+      timeout: 2592000s #30m # Session timeout duration
+      cookie:
+        same-site: Strict
+        max-age: 2592000
+        persistent: true
 
 de:
   flapdoodle:
     mongodb:
       embedded:
-        version: 5.0.8
+        version: 4.0.0

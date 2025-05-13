@@ -1,3 +1,28 @@
-<m-org-navbar></m-org-navbar>
-<m-org-product-list [products]="products" (reloadNeeded)="loadProducts()"></m-org-product-list>
-<div class="loading-spinner" *ngIf="loading">Loading...</div>
+<ui-navbar>
+  <ui-navbar-left>
+    <button mat-icon-button aria-label="Menu button">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span>Shop</span>
+  </ui-navbar-left>
+  <ui-navbar-right>
+    <button mat-icon-button aria-label="User button">
+      <mat-icon>person</mat-icon>
+    </button>
+    <button mat-icon-button aria-label="Cart button" (click)="sidenav.toggleRight()">
+      <mat-icon>shopping_cart</mat-icon>
+    </button>
+  </ui-navbar-right>
+</ui-navbar>
+<ui-sidenav #sidenav>
+  <m-org-product-list
+    [products]="(products$ | async) || []"
+    [data]="products$"
+    (loadMore)="loadProducts()"
+    (addToCartEvent)="addToCart($event)"
+  ></m-org-product-list>
+  <ui-spinner [isLoading]="loading$"></ui-spinner>
+  <ui-sidenav-right>
+    <m-org-cart-compact></m-org-cart-compact>
+  </ui-sidenav-right>
+</ui-sidenav>
