@@ -8,7 +8,6 @@ The primary focus of the project is **frontend DDD** using Nx, with an applicati
 
 This repository is intended as an architectural and learning project rather than a feature-complete webshop.
 
----
 
 ## Architecture Goals
 
@@ -19,7 +18,6 @@ This repository is intended as an architectural and learning project rather than
 - Explore **server-side cart** behavior and responsibilities
 - Keep the backend monolithic but **domain-structured**
 
----
 
 ## Project Structure
 
@@ -29,7 +27,6 @@ This repository is intended as an architectural and learning project rather than
 └── backend    # Spring Boot monolith
 ```
 
----
 
 ## Frontend (Angular / Nx)
 
@@ -57,7 +54,6 @@ The goal is to model the frontend around **business concepts**, not technical la
 nx serve web-shop
 ```
 
----
 
 ## Backend (Spring Boot)
 
@@ -79,7 +75,6 @@ The backend is implemented as a **monolithic Spring Boot application** with a **
 
 The backend structure is intentionally kept simple and flexible, allowing future refactoring if the system grows.
 
----
 
 ## Demonstrated Concepts
 
@@ -90,7 +85,6 @@ The backend structure is intentionally kept simple and flexible, allowing future
 - Server-side cart modeling
 - Angular Material + Tailwind CSS integration
 
----
 
 ## Running the Project (Development)
 
@@ -117,13 +111,11 @@ nx serve web-shop
 - Frontend: http://localhost:4200  
 - Backend: http://localhost:8080  
 
----
 
 ## Notes
 
 This repository serves as an **architectural sandbox**. Some features are incomplete or simplified by design in order to focus on structure, boundaries, and learning rather than completeness.
 
----
 
 ## License
 
