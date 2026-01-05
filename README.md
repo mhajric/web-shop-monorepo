@@ -1,129 +1,131 @@
-# Webshop Monorepo
+# Webshop Monorepo (Angular Nx + Spring Boot)
 
-This repository contains a monorepo for a **webshop application** built with:
-- **Frontend**: Angular framework for a modern, responsive user interface.
-- **Backend**: Spring Boot for scalable and robust RESTful APIs.
+## Project Overview
 
-The monorepo structure allows seamless development and integration between the frontend and backend, ensuring faster iteration and easier maintenance.
+This repository is a **full-stack monorepo** created to explore and practice **Domain-Driven Design (DDD)** concepts across both frontend and backend, using **Angular (Nx)** on the frontend and **Spring Boot** on the backend.
 
----
+The primary focus of the project is **frontend DDD** using Nx, with an application shell and **lazy-loaded feature libraries** that model business domains. The backend is implemented as a **domain-oriented monolith** with a similar conceptual structure, and also explores **server-side cart handling**.
 
-## 📂 Project Structure
-
-/my-monorepo /frontend # Angular-based frontend application /backend # Spring Boot backend application
-
-
-### **Frontend (Angular)**
-
-The Angular application is responsible for:
-- Displaying the product catalog.
-- Managing the shopping cart.
-- Handling user interactions (search, filtering, infinite scrolling).
-- Allowing customers to place orders.
-
-### **Backend (Spring Boot)**
-
-The Spring Boot application provides:
-- RESTful APIs to handle business logic.
-- User authentication and session management.
-- Product, order, and cart data storage using a relational or NoSQL database.
+This repository is intended as an architectural and learning project rather than a feature-complete webshop.
 
 ---
 
-## 🚀 Features
+## Architecture Goals
 
-### Current Features
-- **Product Catalog**: 
-  - Browse products with categories, subcategories, and tags.
-  - Infinite scroll for smooth product browsing.
-- **Cart Management**:
-  - Add, update, and remove items from the cart.
-  - Calculate discounts, shipping costs, and taxes dynamically.
-- **Order Placement**:
-  - Securely place an order with real-time validation.
-  - Send order confirmation via email.
-- **Admin Panel**:
-  - Manage products, categories, and orders.
-  - View sales statistics and customer details.
-
-### Planned Features
-1. **Search & Filter**
-   - Search products by name, description, or tags.
-   - Filter by price range, category, and availability.
-2. **Wishlist**
-   - Allow customers to save products for later.
-3. **Coupons and Promotions**
-   - Support discount codes and promotional offers.
-4. **User Authentication**
-   - Login, registration, and role-based access (customer/admin).
-5. **Payment Gateway Integration**
-   - Accept online payments via PayPal, Stripe, or other providers.
-6. **Analytics Dashboard**
-   - Provide sales and user activity insights for admins.
-7. **Multilingual Support**
-   - Support multiple languages for a wider audience.
-8. **Responsive Design**
-   - Optimize the user experience for mobile, tablet, and desktop.
+- Practice **Domain-Driven Design on the frontend** using Angular Nx
+- Organize frontend code into **feature and domain libraries**
+- Use **lazy-loaded feature libraries** to reflect bounded contexts
+- Align frontend and backend around similar **domain concepts**
+- Explore **server-side cart** behavior and responsibilities
+- Keep the backend monolithic but **domain-structured**
 
 ---
 
-## 🛠️ Installation
+## Project Structure
+
+```text
+/
+├── frontend   # Angular Nx workspace
+└── backend    # Spring Boot monolith
+```
+
+---
+
+## Frontend (Angular / Nx)
+
+The frontend is the main focus of this repository and explores **DDD-style organization** using Nx.
+
+### Frontend highlights
+
+- Nx workspace with an application shell
+- **Lazy-loaded feature libraries** representing domain boundaries
+- Clear separation between UI, domain logic, and shared models
+- Angular Material components styled using **Tailwind CSS**
+
+### Example domain-oriented libraries
+
+- `product` – product domain and related logic
+- `cart` – cart domain and client-side behavior
+- `order` – order placement and flow
+- `shared` – shared domain models and utilities
+
+The goal is to model the frontend around **business concepts**, not technical layers, and to observe how such a structure scales as features grow.
+
+### Running the frontend
+
+```bash
+nx serve web-shop
+```
+
+---
+
+## Backend (Spring Boot)
+
+The backend is implemented as a **monolithic Spring Boot application** with a **domain-oriented package structure**, mirroring the frontend’s conceptual boundaries where possible.
+
+### Backend domain packages
+
+- `customer`
+- `product`
+- `order`
+- `delivery`
+
+### Backend characteristics
+
+- Embedded **H2** database for relational data
+- Embedded **MongoDB** for document-oriented data
+- Server-side cart handling and validation
+- RESTful APIs aligned with frontend domain needs
+
+The backend structure is intentionally kept simple and flexible, allowing future refactoring if the system grows.
+
+---
+
+## Demonstrated Concepts
+
+- Frontend Domain-Driven Design using Angular Nx
+- Lazy-loaded feature libraries as bounded contexts
+- Shared domain language between frontend and backend
+- Domain-oriented backend monolith
+- Server-side cart modeling
+- Angular Material + Tailwind CSS integration
+
+---
+
+## Running the Project (Development)
 
 ### Prerequisites
-- Node.js and npm installed.
-- Java 17+ and Maven installed.
-- A database (e.g., MySQL, MongoDB, or H2).
 
-### Steps
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/<your-username>/my-monorepo.git
-   cd my-monorepo
+- Node.js and npm
+- Java 17+
+- Maven
 
-2. Install dependencies for the frontend:
+### Backend
 
-cd frontend
-npm install
-
-3. Build and run the backend:
-
+```bash
 cd backend
 mvn spring-boot:run
+```
 
-4. Start the frontend server:
+### Frontend
 
+```bash
 cd frontend
-ng serve
+nx serve web-shop
+```
 
-5. Access the application:
+- Frontend: http://localhost:4200  
+- Backend: http://localhost:8080  
 
-Frontend: http://localhost:4200
-Backend: http://localhost:8080
+---
 
-🧩 Tech Stack
+## Notes
 
-Frontend
-Angular
-TypeScript
-TailwindCSS (or any chosen styling framework)
-Backend
-Spring Boot
-Hibernate / JPA (or MongoDB with Spring Data)
-Spring Security (for authentication)
-Maven
-Database
-MySQL, PostgreSQL, or MongoDB (depending on the setup)
+This repository serves as an **architectural sandbox**. Some features are incomplete or simplified by design in order to focus on structure, boundaries, and learning rather than completeness.
 
-💡 Possible Enhancements
+---
 
-Add integration with third-party APIs for product recommendations.
-Implement a microservices architecture for scalability.
-Add WebSockets for real-time order updates.
-Deploy to a cloud platform (AWS, Azure, or Google Cloud).
+## License
 
-📄 License
-This project is licensed under the MIT License.
-
-
-
+MIT License
 
